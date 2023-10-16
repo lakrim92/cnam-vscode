@@ -76,7 +76,32 @@ int main()
             tmp = tirerCarte(0, 51);
             carteSupplementaire = cartes[tmp];
             sommeMainJoueur += carteSupplementaire;
-            printf("CARTE AJOUTÉE : %d\n", carteSupplementaire);
+            printf("    CARTE AJOUTÉE : %d\n", carteSupplementaire);
+            if (sommeMainJoueur > 21)
+            {
+                printf("    La somme de votre main a depasseé 21.\n    Vous avez perdu!\n");
+                printf("    ========================================\n");
+                solde -= mise;
+                printf("    Nouveau solde : %d\n", solde);
+                printf("    ========================================\n");
+                printf("    Remiser ?\n    1 pour oui\n    2 pour non\n");
+                printf("    ========================================\n");
+
+                scanf("%d", &choixMenu);
+
+            if (choixMenu == 2)
+            {
+                terminer = true;
+            }
+            else
+            {
+                sommeMainJoueur = 0;
+                sommeMainBanque = 0;
+                mise = 0;
+                premierTourMiser = true;
+            }
+
+            }
         }
         else if (choixMenu == 2)
         {
@@ -88,30 +113,34 @@ int main()
             }
 
             printf("    ========================================\n");
+            printf("    Main du joueur      ||          %d et %d\n", premiereCarteJoueur, deuxiemeCarteJoueur);
+            printf("    Total               ||          %d      \n", sommeMainJoueur);
+            printf("    ----------------------------------------\n");
+
             printf("    Main de la banque   ||          %d et %d\n", premiereCarteBanque, deuxiemeCarteBanque);
             printf("    Total de la banque  ||          %d\n", sommeMainBanque);
             printf("    ========================================\n");
 
             if (sommeMainBanque > 21)
             {
-                printf("    La banque a dépassé 21. Vous avez gagné !\n");
+                printf("    La banque a dépassé 21.\n   Vous avez gagné !\n");
                 printf("    ========================================\n");
                 solde += mise;
             }
             else if (sommeMainBanque > sommeMainJoueur)
             {
-                printf("    La banque a un total de %d. Vous avez perdu !\n", sommeMainBanque);
+                printf("    La banque a un total de %d.\n   Vous avez perdu !\n", sommeMainBanque);
                 printf("    ========================================\n");
                 solde -= mise;
             }
             else if (sommeMainBanque == sommeMainJoueur)
             {
-                printf("    La banque a un total de %d. Match nul !\n", sommeMainBanque);
+                printf("    La banque a un total de %d.\n   Match nul !\n", sommeMainBanque);
                 printf("    ========================================\n");
             }
             else
             {
-                printf("    La banque a un total de %d. Vous avez gagné !\n", sommeMainBanque);
+                printf("    La banque a un total de %d.\n    Vous avez gagné !\n", sommeMainBanque);
                 printf("    ========================================\n");
                 solde += mise;
             }
@@ -123,7 +152,7 @@ int main()
 
             scanf("%d", &choixMenu);
 
-            if (choixMenu == 3)
+            if (choixMenu == 2)
             {
                 terminer = true;
             }
