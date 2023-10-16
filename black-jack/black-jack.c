@@ -29,6 +29,8 @@ int main()
     int tmpBanque;
     int premiereCarteBanque;
     int deuxiemeCarteBanque;
+    int nombreDeDepassements = 0;
+    int nombreDeCartesTirees = 0;
 
     while (!terminer)
     {
@@ -76,7 +78,13 @@ int main()
             tmp = tirerCarte(0, 51);
             carteSupplementaire = cartes[tmp];
             sommeMainJoueur += carteSupplementaire;
+            nombreDeCartesTirees++;
             printf("    CARTE AJOUTÉE : %d\n", carteSupplementaire);
+            
+            if (sommeMainJoueur > 21) {
+                nombreDeDepassements++;
+            }
+
             if (sommeMainJoueur > 21)
             {
                 printf("    La somme de votre main a depasseé 21.\n    Vous avez perdu!\n");
@@ -89,18 +97,17 @@ int main()
 
                 scanf("%d", &choixMenu);
 
-            if (choixMenu == 2)
-            {
-                terminer = true;
-            }
-            else
-            {
-                sommeMainJoueur = 0;
-                sommeMainBanque = 0;
-                mise = 0;
-                premierTourMiser = true;
-            }
-
+                if (choixMenu == 2)
+                {
+                    terminer = true;
+                }
+                else
+                {
+                    sommeMainJoueur = 0;
+                    sommeMainBanque = 0;
+                    mise = 0;
+                    premierTourMiser = true;
+                }
             }
         }
         else if (choixMenu == 2)
@@ -110,6 +117,7 @@ int main()
                 tmpBanque = tirerCarte(0, 51);
                 carteSupplementaireBanque = cartes[tmpBanque];
                 sommeMainBanque += carteSupplementaireBanque;
+                nombreDeCartesTirees++;
             }
 
             printf("    ========================================\n");
@@ -145,6 +153,10 @@ int main()
                 solde += mise;
             }
 
+            if (sommeMainBanque > 21) {
+                nombreDeDepassements--;
+            }
+
             printf("    Nouveau solde : %d\n", solde);
             printf("    ========================================\n");
             printf("    Remiser ?\n    1 pour oui\n    2 pour non\n");
@@ -166,6 +178,10 @@ int main()
         }
     }
 
+    double probabiliteDepassement = (double)nombreDeDepassements / nombreDeCartesTirees;
+    printf("Probabilité de dépassement de 21 : %.2lf\n", probabiliteDepassement);
+
     printf("Good Bye !");
     return 0;
 }
+
